@@ -1,4 +1,6 @@
-import {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {IconButton, TextField} from "@material-ui/core";
+import {LibraryAdd} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
 
@@ -6,41 +8,51 @@ export type AddItemFormPropsType = {
 }
 
 export function AddItemForm(props: AddItemFormPropsType) {
-  let [newTitle, setNewTitle] = useState<string>('')
+
+  let [taskTitle, setTaskTitle] = useState("")
   let [error, setError] = useState<string>('')
 
-  const onChangeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTitle(e.currentTarget.value)
+  const taskTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setTaskTitle(e.currentTarget.value)
+    /* if (e.currentTarget.value.trim() === "") {
+       setError("title is required")
+     }*/ // это условие лишнее
   }
-  const onKeyPressTaskTitleHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+  const taskTitleKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+
     setError('')
-    if (e.charCode === 13 && newTitle.trim() !== '') {
-      props.addItem(newTitle.trim())
-      setNewTitle('')
+    if (e.charCode === 13 && taskTitle.trim() !== "") {
+      props.addItem(taskTitle.trim());
+      setTaskTitle("")
     }
-    if (e.charCode === 13 && newTitle.trim() === '') {
-      setError('title is required')
+    if (e.charCode === 13 && taskTitle.trim() === "") {
+      setError("title is required")
     }
   }
 
-  const addNewTaskHandler = () => {
-    if (newTitle.trim() !== '') {
-      props.addItem(newTitle.trim())
-      setNewTitle('')
+  const addTaskButtonClickHandler = () => {
+    if (taskTitle.trim() !== "") {
+      props.addItem(taskTitle.trim());
+      setTaskTitle("")
     } else {
-      setError('title is required')
+      setError("title is required")
     }
   }
 
   return (
      <div>
-       <input value={newTitle}
-              onChange={onChangeTaskTitleHandler}
-              onKeyPress={onKeyPressTaskTitleHandler}
-              className={error ? 'is-done' : ''}
+       <TextField
+          value={taskTitle}
+          onChange={taskTitleChangeHandler}
+          onKeyPress={taskTitleKeyPressHandler}
+          variant={'filled'}
+          label={'Type title'}
+          error={!!error}
+          helperText={error}
        />
-       <button onClick={addNewTaskHandler}>+</button>
-       {error && <div className='error-message'>{error}</div>}
+       <IconButton onClick={addTaskButtonClickHandler}>
+         <LibraryAdd/>
+       </IconButton>
      </div>
   )
 }

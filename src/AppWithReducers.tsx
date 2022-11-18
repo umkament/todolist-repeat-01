@@ -1,10 +1,18 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import './App.css';
 import {TasksType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import { Menu } from '@material-ui/icons';
+import {
+  addTodolistAC,
+  changeTodolistFilterAC,
+  changeTodolistTitleAC,
+  removeTodolistAC,
+  todolistsReducer
+} from "./state/todolists-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
 
 export type FilterValueType = "all" | "active" | "completed"
 
@@ -17,18 +25,18 @@ export type TaskStateType = {
   [key: string]: Array<TasksType>
 }
 
-export function App() {
+export function AppWithReducers() {
   console.log('App rendered')
 
   let todolistID1 = v1();
   let todolistID2 = v1();
 
-  let [todolists, setTodolists] = useState<Array<TodolistType>>([
+  let [todolists, dispatchToTodolistsReducer] = useReducer(todolistsReducer, [
     {id: todolistID1, title: "what to watch", filter: "all"},
     {id: todolistID2, title: "list for to do", filter: "completed"}
   ])
 
-  let [tasksObj, setTasks] = useState<TaskStateType>( {
+  let [tasksObj, dispatchToTasksReducer] = useReducer(tasksReducer, {
     [todolistID1]: [
       {id: v1(), isDone: true, title: "interstellar"},
       {id: v1(), isDone: false, title: "terminator"},
@@ -44,74 +52,40 @@ export function App() {
   })
 
   function removeTask (id: string, todolistId: string) {
-    let tasks = tasksObj[todolistId];
-    tasksObj[todolistId] = tasks.filter(t=> t.id !== id)
-    setTasks({...tasksObj})
+    dispatchToTasksReducer(removeTaskAC(id, todolistId))
   }
 
   function addTask(title: string, todolistId: string) {
-    let tasks = tasksObj[todolistId]
-    let newTask = {id: v1(), title: title, isDone: false}
-    tasksObj[todolistId] = [...tasks, newTask]
-    setTasks({...tasksObj})
+    dispatchToTasksReducer(addTaskAC(title, todolistId))
   }
 
   function changeTaskStatus(taskID: string, isDone:boolean, todolistId: string) {
-    let tasks = tasksObj[todolistId]
-    let task = tasks.find(t=>t.id === taskID)
-    if(task){
-      task.isDone=isDone;
-      setTasks({...tasksObj})
-    }
+    dispatchToTasksReducer(changeTaskStatusAC(taskID,isDone, todolistId))
   }
 
   function changeTaskTitle(taskID: string, newTitle: string, todolistId: string) {
-    let tasks = tasksObj[todolistId]
-    let task = tasks.find(t=>t.id === taskID)
-    if(task){
-      task.title=newTitle;
-      setTasks({...tasksObj})
-    }
+    dispatchToTasksReducer(changeTaskTitleAC(taskID, newTitle, todolistId))
   }
 
   function changeTodolistTitle(todolostId: string, newTitle: string) {
-    let todolist = todolists.find(tl=>tl.id === todolostId)
-    if(todolist){
-      todolist.title=newTitle;
-      setTodolists([...todolists])
-    }
+    dispatchToTodolistsReducer(changeTodolistTitleAC(todolostId,newTitle))
   }
 
   function changeTasksFilter (value: FilterValueType, todolistId: string) {
-    let todolist = todolists.find(tl=>tl.id===todolistId)
-    if(todolist) {
-      todolist.filter = value
-      setTodolists([...todolists])
-    }
+    dispatchToTodolistsReducer(changeTodolistFilterAC(value, todolistId))
   }
 
-
   function removeTodolist(todolistId: string) {
-    let removedTodolist = todolists.filter((tl)=>tl.id !== todolistId)
-    setTodolists(removedTodolist)
-
-    delete tasksObj[todolistId]
-    setTasks({...tasksObj})
+    const action = removeTodolistAC(todolistId);
+    dispatchToTodolistsReducer(action);
+    dispatchToTasksReducer(action)
   }
 
 
   function addTodolist (title: string) {
-    debugger
-    let todolist: TodolistType = {
-      id: v1(),
-      filter: "all",
-      title: title
-    }
-    setTodolists([todolist, ...todolists])
-    setTasks({
-      ...tasksObj,
-      [todolist.id]:[]
-    })
+    const action = addTodolistAC(title);
+    dispatchToTodolistsReducer(action);
+    dispatchToTasksReducer(action)
   }
 
   return (
