@@ -55,23 +55,20 @@ const initialState: TaskStateType = {}
         return stateCopy
       }
       case 'CHANGE-TASK-STATUS': {
-        const stateCopy = {...state}
-        let tasks = stateCopy[action.todolistID]
-        let task = tasks.find(t=>t.id === action.taskID)
-        if(task) {
-          task.isDone = action.isDone
-        }
-        stateCopy[action.todolistID] = [...tasks]
-          return stateCopy
+        let tasks = state[action.todolistID]
+        state[action.todolistID] = tasks
+           .map(t => t.id === action.taskID
+              ? {...t, isDone: action.isDone}
+              : t)
+        return ({...state})
       }
       case 'CHANGE-TASK-TITLE': {
           const stateCopy = {...state}
           let tasks = stateCopy[action.todolistID]
-          let task = tasks.find(t=>t.id === action.taskID)
-          if(task) {
-            task.title = action.title
-          }
-        stateCopy[action.todolistID] = [...tasks]
+        stateCopy[action.todolistID] = tasks
+           .map(t => t.id === action.taskID
+              ? {...t, title: action.title}
+              : t)
             return stateCopy
           }
       case 'ADD-TODOLIST': {
