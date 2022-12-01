@@ -71,6 +71,7 @@ const initialState: TaskStateType = {}
           if(task) {
             task.title = action.title
           }
+        stateCopy[action.todolistID] = [...tasks]
             return stateCopy
           }
       case 'ADD-TODOLIST': {
