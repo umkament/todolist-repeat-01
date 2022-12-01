@@ -63,7 +63,7 @@ export function AppWithRedux() {
     dispatch(removeTodolistAC(todolistId));
   }, [dispatch])
 
-  const addTodolist = useCallback( (title: string) => {dispatch(addTodolistAC(title))}, [])
+  const addTodolist = useCallback( (title: string) => {dispatch(addTodolistAC(title))}, [dispatch])
 
   return (
      <div className="App">
