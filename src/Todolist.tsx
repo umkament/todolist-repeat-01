@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {FilterValueType} from "./App";
 import './App.css';
 import {AddItemForm} from "./AddItemForm";
@@ -26,9 +26,8 @@ export type PropsType = {
   changeTodolistTitle: (todolistId: string, newTitle: string)=> void
 }
 
-export function Todolist(props: PropsType) {
-
-
+export const Todolist = React.memo( function Todolist(props: PropsType) {
+  console.log("todolist")
   const removeTodolistHandler = () => {props.removeTodolist(props.id)}
 
   const selectAllHandler = () => {
@@ -41,13 +40,23 @@ export function Todolist(props: PropsType) {
     props.changeTasksFilter("active", props.id)
   }
 
-  const addTask = (title: string) => {
+  const addTask = useCallback( (title: string) => {
     props.addTask(title, props.id)
-  }
+  }, [])
+
   const onChangeTodolistTitleHandler = (newTitle: string)=> {
     props.changeTodolistTitle(props.id, newTitle)
-
   }
+
+  let tasksForTodolist = props.tasks;
+
+  if (props.filter==="completed") {
+    tasksForTodolist = props.tasks.filter(t=>t.isDone)
+  }
+  if (props.filter==="active") {
+    tasksForTodolist = props.tasks.filter(t=>!t.isDone)
+  }
+
 
   return (
      <div>
@@ -101,5 +110,5 @@ export function Todolist(props: PropsType) {
        </div>
      </div>
   );
-}
+})
 

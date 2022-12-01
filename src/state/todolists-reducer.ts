@@ -31,13 +31,9 @@ type ChangeTodolistFilterActionType = {
 // и инструкцию (action, тоже объект)
 // согласно прописанному type в этом action (инструкции) я поменяю state
 
-export let todolistID1 = v1();
-export let todolistID2 = v1();
 
-const initialState: Array<TodolistType> = [
-  {id: todolistID1, title: "what to watch", filter: "all"},
-  {id: todolistID2, title: "list for to do", filter: "completed"}
-]
+
+const initialState: Array<TodolistType> = []
 
 export const todolistsReducer = (state: Array<TodolistType> = initialState, action: ActionsType): Array<TodolistType> => {
   switch (action.type) {
@@ -45,11 +41,14 @@ export const todolistsReducer = (state: Array<TodolistType> = initialState, acti
       return state.filter(tl => tl.id !== action.id)
     }
     case 'ADD-TODOLIST': {
-      return [{
+      return [
+         {
         id: action.todolistID,
         title: action.title,
         filter: 'all'
-      }, ...state]
+      },
+        ...state
+      ]
     }
     case 'CHANGE-TODOLIST-TITLE': {
       let todolist = state.find(tl => tl.id === action.id)
