@@ -1,6 +1,6 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
-import {TasksType, Todolist} from "./Todolist";
+import {Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
@@ -13,6 +13,7 @@ import {
   todolistsReducer
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api";
 
 export type FilterValueType = "all" | "active" | "completed"
 
@@ -22,7 +23,7 @@ export type TodolistType = {
   filter: FilterValueType
 }
 export type TaskStateType = {
-  [key: string]: Array<TasksType>
+  [key: string]: Array<TaskType>
 }
 
 export function AppWithReducers() {
@@ -32,22 +33,22 @@ export function AppWithReducers() {
   let todolistID2 = v1();
 
   let [todolists, dispatchToTodolistsReducer] = useReducer(todolistsReducer, [
-    {id: todolistID1, title: "what to watch", filter: "all"},
-    {id: todolistID2, title: "list for to do", filter: "completed"}
+    {id: todolistID1, title: "what to watch", filter: "all", addedDate: '', order: 0},
+    {id: todolistID2, title: "list for to do", filter: "completed", addedDate: '', order: 0}
   ])
 
   let [tasksObj, dispatchToTasksReducer] = useReducer(tasksReducer, {
     [todolistID1]: [
-      {id: v1(), isDone: true, title: "interstellar"},
-      {id: v1(), isDone: false, title: "terminator"},
-      {id: v1(), isDone: true, title: "true detective"},
-      {id: v1(), isDone: false, title: "avatar"}
+      {id: v1(), status: TaskStatuses.Completed, title: "interstellar",description: "", priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: todolistID1, order: 0, addedDate: ''},
+      {id: v1(), status: TaskStatuses.New, title: "terminator",description: "", priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: todolistID1, order: 0, addedDate: ''},
+      {id: v1(), status: TaskStatuses.Completed, title: "true detective",description: "", priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: todolistID1, order: 0, addedDate: ''},
+      {id: v1(), status: TaskStatuses.New, title: "avatar",description: "", priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: todolistID1, order: 0, addedDate: ''}
     ],
     [todolistID2]: [
-      {id: v1(), isDone: true, title: "вымыть руки"},
-      {id: v1(), isDone: false, title: "кушать"},
-      {id: v1(), isDone: true, title: "чистить зубы"},
-      {id: v1(), isDone: false, title: "спать"}
+      {id: v1(), status: TaskStatuses.Completed, title: "вымыть руки",description: "", priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: todolistID2, order: 0, addedDate: ''},
+      {id: v1(), status: TaskStatuses.New, title: "кушать",description: "", priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: todolistID2, order: 0, addedDate: ''},
+      {id: v1(), status: TaskStatuses.Completed, title: "чистить зубы",description: "",priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: todolistID2, order: 0, addedDate: '' },
+      {id: v1(), status: TaskStatuses.New, title: "спать",description: "", priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: todolistID2, order: 0, addedDate: ''}
     ]
   })
 
@@ -59,8 +60,8 @@ export function AppWithReducers() {
     dispatchToTasksReducer(addTaskAC(title, todolistId))
   }
 
-  function changeTaskStatus(taskID: string, isDone:boolean, todolistId: string) {
-    dispatchToTasksReducer(changeTaskStatusAC(taskID,isDone, todolistId))
+  function changeTaskStatus(taskID: string, status: TaskStatuses, todolistId: string) {
+    dispatchToTasksReducer(changeTaskStatusAC(taskID,status, todolistId))
   }
 
   function changeTaskTitle(taskID: string, newTitle: string, todolistId: string) {
@@ -121,10 +122,10 @@ export function AppWithReducers() {
 
                let tasksForTodolist = tasksObj[tl.id];
                if (tl.filter==="completed") {
-                 tasksForTodolist = tasksForTodolist.filter(t=>t.isDone)
+                 tasksForTodolist = tasksForTodolist.filter(t=>t.status === TaskStatuses.Completed)
                }
                if (tl.filter==="active") {
-                 tasksForTodolist = tasksForTodolist.filter(t=>!t.isDone)
+                 tasksForTodolist = tasksForTodolist.filter(t=>t.status === TaskStatuses.New)
                }
                return <Grid item
                             style={{padding: '10px'}}

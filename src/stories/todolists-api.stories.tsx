@@ -54,58 +54,91 @@ export const UpdateTodolistTitle = () => {
 
 export const GetTasks = ()=> {
   const [state, setState] = useState<any>(null)
-  useEffect(() => {
-    const id= 'ec4ec56f-8168-4ae6-928a-047e7870d610'
-    todolistsAPI.getTasks(id).then(response => {
+  const [todolistId, setTodolistId] = useState<string>('')
+
+  const getTask = () => {
+
+    todolistsAPI.getTasks(todolistId).then(response => {
       setState(response.data)
     })
-    // здесь мы будем делать запрос и ответ закидывать в стейт.
-    // который в виде строки будем отображать в div-ке
-
-  }, [])
-  return <div>{JSON.stringify(state)}</div>
+  }
+  return <div>{JSON.stringify(state)}
+    <div>
+      <input placeholder={"todolistId"} value={todolistId}
+             onChange={(e)=>{setTodolistId(e.currentTarget.value)}}/>
+      <button onClick={getTask}>getTask</button>
+    </div>
+    </div>
 }
 
 export const CreateTask = ()=> {
   const [state, setState] = useState<any>(null)
-  useEffect(() => {
-    const id= 'ec4ec56f-8168-4ae6-928a-047e7870d610'
-    const taskTitle = 'newTask'
-    todolistsAPI.createTask(id, taskTitle).then(response => {
+  const [taskTitle, setTaskTitle] = useState<string>('')
+  const [todolistId, setTodolistId] = useState<string>('')
+
+  const createTask = ()=> {
+    todolistsAPI.createTask(todolistId, taskTitle)
+       .then(response => {
       setState(response.data)
     })
-  }, [])
-  return <div>{JSON.stringify(state)}</div>
+  }
+
+  return <div>{JSON.stringify(state)}
+  <div>
+    <input placeholder={"todolistId"} value={todolistId}
+    onChange={(e)=>{setTodolistId(e.currentTarget.value)}}/>
+    <input placeholder={"taskTitle"} value={taskTitle}
+      onChange={(e)=>{setTaskTitle(e.currentTarget.value)}}/>
+    <button onClick={createTask}>createTask</button>
+  </div>
+  </div>
 }
 
 export const DeleteTasks = ()=> {
   const [state, setState] = useState<any>(null)
-  useEffect(() => {
-    const todolistId= 'ec4ec56f-8168-4ae6-928a-047e7870d610'
-    const taskId= ''
+  const [taskId, setTaskId] = useState<string>('')
+  const [todolistId, setTodolistId] = useState<string>('')
+
+  const deleteTask = ()=>{
     todolistsAPI.deleteTask(todolistId, taskId).then(response => {
       setState(response.data)
     })
-    // здесь мы будем делать запрос и ответ закидывать в стейт.
-    // который в виде строки будем отображать в div-ке
+  }
 
-  }, [])
-  return <div>{JSON.stringify(state)}</div>
+  return <div>{JSON.stringify(state)}
+    <div>
+      <input placeholder={"todolistId"} value={todolistId}
+             onChange={(e)=>{setTodolistId(e.currentTarget.value)}}/>
+      <input placeholder={"taskId"} value={taskId}
+             onChange={(e)=>{setTaskId(e.currentTarget.value)}}/>
+      <button onClick={deleteTask}>deleteTask</button>
+    </div>
+  </div>
 }
 
 export const UpdateTasks = ()=> {
   const [state, setState] = useState<any>(null)
-  useEffect(() => {
-    const todolistId= 'ec4ec56f-8168-4ae6-928a-047e7870d610'
-    const taskId= 'a2873742-b5da-473d-b35d-38532cae115d'
-    const taskTitle = 'changeTaskTitle'
+  const [taskTitle, setTaskTitle] = useState<string>('')
+  const [taskId, setTaskId] = useState<string>('')
+  const [todolistId, setTodolistId] = useState<string>('')
+
+  const updateTask = () => {
     todolistsAPI.updateTask(todolistId, taskId, taskTitle).then(response => {
       setState(response.data)
     })
-    // здесь мы будем делать запрос и ответ закидывать в стейт.
-    // который в виде строки будем отображать в div-ке
+  }
 
-  }, [])
-  return <div>{JSON.stringify(state)}</div>
+
+  return <div>{JSON.stringify(state)}
+    <div>
+      <input placeholder={"todolistId"} value={todolistId}
+             onChange={(e)=>{setTodolistId(e.currentTarget.value)}}/>
+      <input placeholder={"taskId"} value={taskId}
+             onChange={(e)=>{setTaskId(e.currentTarget.value)}}/>
+      <input placeholder={"taskTitle"} value={taskTitle}
+             onChange={(e)=>{setTaskTitle(e.currentTarget.value)}}/>
+      <button onClick={updateTask}>updateTask</button>
+    </div>
+  </div>
 }
 
