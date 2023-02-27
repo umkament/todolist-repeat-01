@@ -2,8 +2,8 @@ import {v1} from "uuid";
 import {TodolistType} from "../api/todolists-api";
 
 export type ActionsType =
-   RemoveTodolistActionType|
-   AddTodolistActionType|
+   RemoveTodolistActionType |
+   AddTodolistActionType |
    ChangeTodolistTitleActionType |
    ChangeTodolistFilterActionType
 
@@ -36,7 +36,6 @@ export type TodolistDomainType = TodolistType & {
 // меня вызовут и дадут мне стейт (почти всегда объект)
 // и инструкцию (action, тоже объект)
 // согласно прописанному type в этом action (инструкции) я поменяю state
-
 
 
 const initialState: Array<TodolistDomainType> = []
