@@ -7,6 +7,6 @@ export default {
   component: AddItemForm
 }
 
-export const AddItemFormBaseElement = (props: any) =>{
+export const AddItemFormBaseElement = (props: any) => {
   return <AddItemForm addItem={action('button add text')}/>
 }

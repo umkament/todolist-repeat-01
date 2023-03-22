@@ -12,7 +12,7 @@ export type TaskPropsType = {
   t: TaskType
   todolistID: string
 }
-export const Task = React.memo( (props: TaskPropsType) => {
+export const Task = React.memo((props: TaskPropsType) => {
   console.log("task")
   const removeTaskHandler = () => {
     props.removeTask(props.t.id, props.todolistID)
@@ -21,7 +21,7 @@ export const Task = React.memo( (props: TaskPropsType) => {
     props.changeTaskStatus(props.t.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New, props.todolistID)
   }
 
-  const changeTaskTitleHandler = useCallback( (newTitle: string) => {
+  const changeTaskTitleHandler = useCallback((newTitle: string) => {
     props.changeTaskTitle(props.t.id, newTitle, props.todolistID)
   }, [props.changeTaskTitle, props.t.id, props.todolistID])
 

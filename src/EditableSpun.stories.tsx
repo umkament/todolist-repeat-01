@@ -7,6 +7,6 @@ export default {
   component: EditableSpan
 }
 
-export const EditableSpanBaseElement = (props: any) =>{
+export const EditableSpanBaseElement = (props: any) => {
   return <EditableSpan title={"title"} onChange={action('title changed')}/>
 }
