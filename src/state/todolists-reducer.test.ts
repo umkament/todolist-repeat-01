@@ -5,10 +5,10 @@ import {
   removeTodolistAC, TodolistDomainType,
   todolistsReducer
 } from './todolists-reducer'
-import { v1 } from 'uuid'
+import {v1} from 'uuid'
 import {FilterValueType} from '../App'
 
-test('correct todolist should be removed' , () => {
+test('correct todolist should be removed', () => {
   let todolistId1 = v1()
   let todolistId2 = v1()
 
