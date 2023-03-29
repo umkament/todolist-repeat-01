@@ -1,7 +1,9 @@
 import {v1} from "uuid";
-import {TodolistType} from "../api/todolists-api";
+import {todolistsAPI, TodolistType} from "../api/todolists-api";
+import {Dispatch} from "redux";
+import {AppActionsType} from "./store";
 
-export type ActionsType =
+export type TodolistsActionsType =
    RemoveTodolistActionType |
    AddTodolistActionType |
    ChangeTodolistTitleActionType |
@@ -9,26 +11,27 @@ export type ActionsType =
    SetTodolistActionType
 
 export type RemoveTodolistActionType = {
-  type: 'REMOVE-TODOLIST'
+  type: "REMOVE-TODOLIST",
   id: string
 }
 export type AddTodolistActionType = {
-  type: 'ADD-TODOLIST'
-  title: string
+  type: "ADD-TODOLIST",
+  title: string,
   todolistID: string
+
 }
 type ChangeTodolistTitleActionType = {
-  type: 'CHANGE-TODOLIST-TITLE'
-  id: string
+  type: "CHANGE-TODOLIST-TITLE",
+  id: string,
   title: string
 }
 type ChangeTodolistFilterActionType = {
-  type: 'CHANGE-TODOLIST-FILTER'
-  id: string
+  type: 'CHANGE-TODOLIST-FILTER',
+  id: string,
   filter: FilterValueType
 }
 export type SetTodolistActionType = {
-  type: 'SET-TODOLISTS'
+  type: 'SET-TODOLISTS',
   todolists: Array<TodolistType>
 }
 
@@ -45,7 +48,7 @@ export type TodolistDomainType = TodolistType & {
 
 const initialState: Array<TodolistDomainType> = []
 
-export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> => {
+export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: TodolistsActionsType): Array<TodolistDomainType> => {
   switch (action.type) {
     case 'REMOVE-TODOLIST': {
       return state.filter(tl => tl.id !== action.id)
@@ -120,5 +123,13 @@ export const setTodolistsAC = (todolists: Array<TodolistType>): SetTodolistActio
   return {
     type: 'SET-TODOLISTS',
     todolists: todolists
+  }
+}
+
+export const fetchTodolistsTC = ()=> {
+  return (dispatch: Dispatch<AppActionsType>) => {
+    todolistsAPI.getTodolists().then(res => {
+      dispatch(setTodolistsAC(res.data))
+    })
   }
 }
