@@ -14,6 +14,7 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType, todolistsAPI} from "./api/todolists-api";
+import {useAppDispatch} from "./hooks";
 
 
 export type TaskStateType = {
@@ -22,14 +23,13 @@ export type TaskStateType = {
 
 export function AppWithRedux() {
   console.log("app")
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
   const tasksObj = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
 
 
   useEffect(()=>{
-    // @ts-ignore
     dispatch(fetchTodolistsTC());
   },[])
 

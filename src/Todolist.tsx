@@ -9,6 +9,7 @@ import {Task} from "./Task";
 import {TaskStatuses, TaskType} from "./api/todolists-api";
 import {useDispatch} from "react-redux";
 import {fetchTasksTC} from "./state/tasks-reducer";
+import {useAppDispatch} from "./hooks";
 
 
 export type PropsType = {
@@ -27,7 +28,7 @@ export type PropsType = {
 
 export const Todolist = React.memo(function Todolist(props: PropsType) {
   console.log("todolist")
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(()=>{
     dispatch(fetchTasksTC(props.id))

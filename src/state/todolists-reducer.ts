@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 import {todolistsAPI, TodolistType} from "../api/todolists-api";
 import {Dispatch} from "redux";
-import {AppActionsType} from "./store";
+import {AppActionsType, AppThunk} from "./store";
 
 export type TodolistsActionsType =
    RemoveTodolistActionType |
@@ -126,8 +126,8 @@ export const setTodolistsAC = (todolists: Array<TodolistType>): SetTodolistActio
   }
 }
 
-export const fetchTodolistsTC = ()=> {
-  return (dispatch: Dispatch<AppActionsType>) => {
+export const fetchTodolistsTC = (): AppThunk=> {
+  return (dispatch) => {
     todolistsAPI.getTodolists().then(res => {
       dispatch(setTodolistsAC(res.data))
     })
