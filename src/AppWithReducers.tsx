@@ -1,4 +1,5 @@
 import React, {useReducer} from 'react';
+/*
 import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
@@ -26,7 +27,7 @@ export type TaskStateType = {
   [key: string]: Array<TaskType>
 }
 
-export function AppWithReducers() {
+function AppWithReducers() {
   console.log('App rendered')
 
   let todolistID1 = v1();
@@ -144,9 +145,9 @@ export function AppWithReducers() {
     dispatchToTasksReducer(removeTaskAC(id, todolistId))
   }
 
-  function addTask(title: string, todolistId: string) {
+/!*  function addTask(title: string, todolistId: string) {
     dispatchToTasksReducer(addTaskAC(title, todolistId))
-  }
+  }*!/
 
   function changeTaskStatus(taskID: string, status: TaskStatuses, todolistId: string) {
     dispatchToTasksReducer(changeTaskStatusAC(taskID, status, todolistId))
@@ -228,7 +229,7 @@ export function AppWithReducers() {
                       title={tl.title}
                       tasks={tasksForTodolist}
                       filter={tl.filter}
-                      addTask={addTask}
+                     /!* addTask={addTask}*!/
                       removeTask={removeTask}
                       changeTasksFilter={changeTasksFilter}
                       changeTaskStatus={changeTaskStatus}
@@ -246,4 +247,5 @@ export function AppWithReducers() {
   );
 }
 
+*/
 
