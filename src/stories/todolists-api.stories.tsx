@@ -132,11 +132,11 @@ export const UpdateTasks = () => {
   const [taskId, setTaskId] = useState<string>('')
   const [todolistId, setTodolistId] = useState<string>('')
 
-  const updateTask = () => {
-    todolistsAPI.updateTask(todolistId, taskId, taskTitle).then(response => {
+/*  const updateTask = () => {
+    todolistsAPI.updateTask(todolistId, taskId, {}).then(response => {
       setState(response.data)
     })
-  }
+  }*/
 
 
   return <div>{JSON.stringify(state)}
@@ -153,7 +153,7 @@ export const UpdateTasks = () => {
              onChange={(e) => {
                setTaskTitle(e.currentTarget.value)
              }}/>
-      <button onClick={updateTask}>updateTask</button>
+      <button onClick={()=>{}}>updateTask</button>
     </div>
   </div>
 }

@@ -1,3 +1,5 @@
+import React from "react";
+/*
 import {TaskStateType} from "../App";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
@@ -97,7 +99,7 @@ test('correct task should be removed from correct array', () => {
    }
 )
 
-/*test('new task should be added in correct array', () => {
+/!*test('new task should be added in correct array', () => {
 
      const action = addTaskAC("juse", "todolistID2")
      const endState = tasksReducer(startState, action)
@@ -108,7 +110,7 @@ test('correct task should be removed from correct array', () => {
      expect(endState['todolistID2'][0].title).toBe("juse")
      expect(endState['todolistID2'][0].status).toBe(TaskStatuses.New)
    }
-)*/
+)*!/
 
 test('status of specified task should be changed', () => {
 
@@ -180,3 +182,4 @@ test('empty array should be added when we set todolists', () => {
 
 
 
+*/

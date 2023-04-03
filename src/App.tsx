@@ -183,7 +183,7 @@ export function App() {
     }
   }
 
-  function changeTasksFilter(value: FilterValueType, todolistId: string) {
+  function changeTasksFilter(todolistId: string, value: FilterValueType) {
     let todolist = todolists.find(tl => tl.id === todolistId)
     if (todolist) {
       todolist.filter = value
