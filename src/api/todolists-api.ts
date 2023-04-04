@@ -7,61 +7,13 @@ const settings = {
     "API-KEY": "198377a1-b97d-41c4-a5b8-692b6bfcbc08"
   }
 }
-
 const instance = axios.create({
   ...settings,
   baseURL: 'https://social-network.samuraijs.com/api/1.1/'
 })
 
-export type TodolistType = {
-  id: string
-  title: string
-  addedDate: string
-  order: number
-}
-type ResponseType<D = {}> = {
-  resultCode: number
-  messages: [],
-  data: D
-}
 
-export enum TaskStatuses {
-  New,
-  InProgress,
-  Completed,
-  Draft
-}
-
-export enum TaskPriorities {
-  Low,
-  Middle,
-  Hi,
-  Urgently,
-  Later
-}
-
-export type TaskType = UpdateTaskModelType & {
-  id: string
-  todoListId: string
-  order: number
-  addedDate: string
-}
-
-type TasksContentType = {
-  totalCount: number
-  error: string | null
-  items: TaskType
-}
-
-export type UpdateTaskModelType = {
-  description: string
-  title: string
-  status: TaskStatuses
-  priority: TaskPriorities
-  startDate: string
-  deadline: string
-}
-
+//api
 export let todolistsAPI = {
   getTodolists() {
     return instance.get<Array<TodolistType>>('todo-lists')
@@ -87,4 +39,49 @@ export let todolistsAPI = {
   updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
     return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, {model})
   }
+}
+
+// types
+export type TodolistType = {
+  id: string
+  title: string
+  addedDate: string
+  order: number
+}
+export type ResponseType<D = {}> = {
+  resultCode: number
+  messages: [],
+  data: D
+}
+export enum TaskStatuses {
+  New,
+  InProgress,
+  Completed,
+  Draft
+}
+export enum TaskPriorities {
+  Low,
+  Middle,
+  Hi,
+  Urgently,
+  Later
+}
+export type TaskType = UpdateTaskModelType & {
+  id: string
+  todoListId: string
+  order: number
+  addedDate: string
+}
+export type TasksContentType = {
+  totalCount: number
+  error: string | null
+  items: TaskType
+}
+export type UpdateTaskModelType = {
+  description: string
+  title: string
+  status: TaskStatuses
+  priority: TaskPriorities
+  startDate: string
+  deadline: string
 }

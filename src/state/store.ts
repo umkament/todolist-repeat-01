@@ -9,9 +9,9 @@ const rootReducer = combineReducers({
   tasks: tasksReducer
 })
 
-export type AppRootStateType = ReturnType<typeof rootReducer>
-
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+
+export type AppRootStateType = ReturnType<typeof rootReducer>
 
 export type AppActionsType = TasksActionsType | TodolistsActionsType
 

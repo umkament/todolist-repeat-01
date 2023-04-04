@@ -94,7 +94,6 @@ export function AppWithRedux() {
          </Grid>
          <Grid container
                style={{padding: '25px'}}
-
          >
            {
              todolists.map(tl => {
@@ -106,7 +105,6 @@ export function AppWithRedux() {
                >
                  <Paper style={{padding: '25px'}}
                         elevation={5}
-
                  >
                    <Todolist
                       key={tl.id}
