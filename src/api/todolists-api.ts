@@ -46,6 +46,7 @@ export type TaskType = UpdateTaskModelType & {
   order: number
   addedDate: string
 }
+
 type TasksContentType = {
   totalCount: number
   error: string | null
@@ -84,6 +85,6 @@ export let todolistsAPI = {
     return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
   },
   updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-    return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {model})
+    return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, {model})
   }
 }
