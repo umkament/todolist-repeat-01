@@ -1,6 +1,4 @@
 import React, {useCallback, useEffect} from "react";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
 import {
   addTodolistsTC,
   changeTodolistFilterAC,
@@ -32,6 +30,8 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
   }, [])
 
   const addTask = useCallback(function addTask(title: string, todolistId: string) {
+    console.log(title)
+    console.log(todolistId)
     dispatch(addTaskTC(title, todolistId))
   }, [])
 

@@ -15,6 +15,8 @@ export const tasksReducer = (state: TaskStateType = initialState, action: TasksA
     case 'ADD-TASK':
       // возвращаем копию state и в нужный тудулист [action.task.todoListId]
       // подменяем массив на тот, что и был, но в начало добавляем новую таску
+      console.log(action.task)
+      console.log(action)
       return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
     case 'UPDATE-TASK':
       //возвращаем копию state, и в нужном тудулисте [action.task.todoListId]
@@ -84,7 +86,8 @@ export const removeTaskTC = (taskID: string, todolistId: string): AppThunk => (d
 export const addTaskTC = (title: string, todolistId: string): AppThunk => (dispatch) => {
     todolistsAPI.createTask(todolistId, title)
        .then(res => {
-         dispatch(addTaskAC(res.data.data.items))
+
+         dispatch(addTaskAC(res.data.data.item))
        })
 }
 export const updateTaskTC = (taskID: string, domaimModel: UpdateDomainTaskModelType, todolistID: string): AppThunk => {

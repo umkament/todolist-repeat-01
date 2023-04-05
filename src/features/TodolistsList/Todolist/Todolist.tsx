@@ -48,6 +48,8 @@ export const Todolist = React.memo(function Todolist(props: PropsType) {
   }, [props.changeTasksFilter, props.id])
 
   const addTask = useCallback((title: string) => {
+    console.log(title)
+    console.log(props.id)
     props.addTask(title, props.id)
   }, [props.addTask, props.id])
 
