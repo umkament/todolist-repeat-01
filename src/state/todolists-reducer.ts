@@ -40,10 +40,10 @@ export const changeTodolistFilterAC = (todolistID: string, newFilter: FilterValu
 export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET-TODOLISTS', todolists} as const)
 
 //thunks
-export const fetchTodolistsTC = (): AppThunk =>(dispatch) => {
-    todolistsAPI.getTodolists().then(res => {
-      dispatch(setTodolistsAC(res.data))
-    })
+export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
+  todolistsAPI.getTodolists().then(res => {
+    dispatch(setTodolistsAC(res.data))
+  })
 }
 // пример async/await
 //сначала объявляем, что наша функция асинхронная async
@@ -60,20 +60,20 @@ export const fetchTodolistsTC = (): AppThunk =>(dispatch) => {
   }
 }*/
 
-export const removeTodolistsTC = (todolistID: string): AppThunk =>(dispatch) => {
-    todolistsAPI.deleteTodolist(todolistID).then(res => {
-      dispatch(removeTodolistAC(todolistID))
-    })
+export const removeTodolistsTC = (todolistID: string): AppThunk => (dispatch) => {
+  todolistsAPI.deleteTodolist(todolistID).then(res => {
+    dispatch(removeTodolistAC(todolistID))
+  })
 }
-export const addTodolistsTC = (title: string): AppThunk =>(dispatch) => {
-    todolistsAPI.createTodolist(title).then(res => {
-      dispatch(addTodolistAC(res.data.data.item))
-    })
+export const addTodolistsTC = (title: string): AppThunk => (dispatch) => {
+  todolistsAPI.createTodolist(title).then(res => {
+    dispatch(addTodolistAC(res.data.data.item))
+  })
 }
-export const changeTodolistTitleTC = (todolistID: string, title: string): AppThunk =>(dispatch) => {
-    todolistsAPI.updateTodolist(todolistID, title).then(res => {
-      dispatch(changeTodolistTitleAC(todolistID, title))
-    })
+export const changeTodolistTitleTC = (todolistID: string, title: string): AppThunk => (dispatch) => {
+  todolistsAPI.updateTodolist(todolistID, title).then(res => {
+    dispatch(changeTodolistTitleAC(todolistID, title))
+  })
 }
 
 //types

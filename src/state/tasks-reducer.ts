@@ -27,7 +27,7 @@ export const tasksReducer = (state: TaskStateType = initialState, action: TasksA
         [action.todolistID]: state[action.todolistID].map(t => t.id === action.taskID ? {...t, ...action.model} : t)
       }
     case 'ADD-TODOLIST':
-    return {...state,[action.todolist.id]:[]}
+      return {...state, [action.todolist.id]: []}
     case "REMOVE-TODOLIST":
       const stateCopy = {...state}
       delete stateCopy[action.id]
@@ -73,22 +73,22 @@ export const setTasksAC = (tasks: TaskType[], todolistID: string) => ({
 
 //thunks
 export const fetchTasksTC = (todolistID: string): AppThunk => (dispatch) => {
-    todolistsAPI.getTasks(todolistID).then((res) => {
-      dispatch(setTasksAC(res.data.items, todolistID))
-    })
+  todolistsAPI.getTasks(todolistID).then((res) => {
+    dispatch(setTasksAC(res.data.items, todolistID))
+  })
 
 }
 export const removeTaskTC = (taskID: string, todolistId: string): AppThunk => (dispatch) => {
-    todolistsAPI.deleteTask(taskID, todolistId).then(res => {
-      dispatch(removeTaskAC(taskID, todolistId))
-    })
+  todolistsAPI.deleteTask(taskID, todolistId).then(res => {
+    dispatch(removeTaskAC(taskID, todolistId))
+  })
 }
 export const addTaskTC = (title: string, todolistId: string): AppThunk => (dispatch) => {
-    todolistsAPI.createTask(todolistId, title)
-       .then(res => {
+  todolistsAPI.createTask(todolistId, title)
+     .then(res => {
 
-         dispatch(addTaskAC(res.data.data.item))
-       })
+       dispatch(addTaskAC(res.data.data.item))
+     })
 }
 export const updateTaskTC = (taskID: string, domaimModel: UpdateDomainTaskModelType, todolistID: string): AppThunk => {
   return (dispatch, getState: () => AppRootStateType) => {

@@ -31,7 +31,7 @@ export let todolistsAPI = {
     return instance.get<TasksContentType>(`todo-lists/${todolistId}/tasks`)
   },
   createTask(todolistId: string, title: string) {
-    return instance.post<{title: string},AxiosResponse<ResponseType<{item: TaskType}>>>(`todo-lists/${todolistId}/tasks`, {title})
+    return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks`, {title})
   },
   deleteTask(taskId: string, todolistId: string) {
     return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
@@ -53,12 +53,14 @@ export type ResponseType<D = {}> = {
   messages: [],
   data: D
 }
+
 export enum TaskStatuses {
   New,
   InProgress,
   Completed,
   Draft
 }
+
 export enum TaskPriorities {
   Low,
   Middle,
@@ -66,6 +68,7 @@ export enum TaskPriorities {
   Urgently,
   Later
 }
+
 export type TaskType = UpdateTaskModelType & {
   id: string
   todoListId: string
