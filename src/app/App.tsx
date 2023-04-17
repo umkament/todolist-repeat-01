@@ -1,8 +1,11 @@
 import React from 'react';
 import './App.css';
-import {AppBar, Button, Container, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from '@material-ui/icons';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
+import CustomizedSnackbars from "../components/errorSnackbar/ErrorSnackbar";
+
+
 
 
 export function App() {
@@ -10,6 +13,7 @@ export function App() {
 
   return (
      <div className="App">
+
        <AppBar position="static"
                color={'default'}
 
@@ -26,6 +30,7 @@ export function App() {
            </Typography>
            <Button color="default" style={{padding: '25px'}}>All Todolists</Button>
          </Toolbar>
+         <LinearProgress color={'primary'} />
        </AppBar>
        <Container fixed>
         <TodolistsList/>
