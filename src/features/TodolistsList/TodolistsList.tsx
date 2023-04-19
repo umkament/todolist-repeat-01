@@ -11,9 +11,9 @@ import {
 import {addTaskTC, removeTaskTC, TaskStateType, updateTaskTC} from "../../state/tasks-reducer";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {TaskStatuses} from "../../api/todolists-api";
-import {Grid, Paper} from "@material-ui/core";
 import {AddItemForm} from "../../components/addItemForm/AddItemForm";
 import {Todolist} from "./Todolist/Todolist";
+import {Grid, Paper} from "@mui/material";
 
 export type TodolistsListPropsType = {}
 export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {

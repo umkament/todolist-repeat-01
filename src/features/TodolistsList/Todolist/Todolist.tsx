@@ -2,13 +2,13 @@ import React, {useCallback, useEffect} from "react";
 import '../../../app/App.css';
 import {AddItemForm} from "../../../components/addItemForm/AddItemForm";
 import {EditableSpan} from '../../../components/editableSpun/EditableSpun';
-import {Button, IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
 import {Task} from "./Task/Task";
 import {TaskStatuses, TaskType} from "../../../api/todolists-api";
 import {fetchTasksTC} from "../../../state/tasks-reducer";
 import {useAppDispatch} from "../../../app/hooks";
 import {FilterValueType} from "../../../state/todolists-reducer";
+import {Button, IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 
 export type PropsType = {

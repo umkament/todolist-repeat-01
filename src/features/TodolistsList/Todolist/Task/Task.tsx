@@ -1,9 +1,9 @@
 import React, {ChangeEvent, useCallback} from "react";
-import {Checkbox, IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
 import {EditableSpan} from "../../../../components/editableSpun/EditableSpun";
 
 import {TaskStatuses, TaskType} from "../../../../api/todolists-api";
+import {Checkbox, IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 export type TaskPropsType = {
   removeTask: (id: string, todolistId: string) => void
