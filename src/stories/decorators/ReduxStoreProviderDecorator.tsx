@@ -2,7 +2,7 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {combineReducers, createStore} from 'redux'
 import {v1} from 'uuid'
-import {AppRootStateType} from '../../app/store'
+import {RootStateType} from '../../app/store'
 import {tasksReducer} from '../../state/tasks-reducer'
 import {todolistsReducer} from '../../state/todolists-reducer'
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   todolists: todolistsReducer
 })
 
-const initialGlobalState: AppRootStateType = {
+const initialGlobalState: RootStateType = {
   todolists: [
     {id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: '', order: 0},
     {id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: '', order: 0}
@@ -71,6 +71,10 @@ const initialGlobalState: AppRootStateType = {
         addedDate: ''
       }
     ]
+  },
+  app: {
+    status: 'idle',
+    error: null
   }
 }
 
