@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import CustomizedSnackbars from "../components/errorSnackbar/ErrorSnackbar";
 import {Menu} from "@mui/icons-material";
 import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
-//import Button from "@mui/material/Button";
+import {ErrorSnackbar} from "../components/errorSnackbar/ErrorSnackbar";
+
 
 
 
@@ -14,7 +14,7 @@ export function App() {
 
   return (
      <div className="App">
- <CustomizedSnackbars/>
+ <ErrorSnackbar/>
        <AppBar position="static"
                color={'default'}
        >
