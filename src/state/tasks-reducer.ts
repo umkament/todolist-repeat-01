@@ -1,6 +1,8 @@
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolists-api";
 import {RootStateType, AppThunk} from "../app/store";
+import {setErrorAC} from "./app-reducer";
+import {Dispatch} from "redux";
 
 
 const initialState: TaskStateType = {}
@@ -83,14 +85,22 @@ export const removeTaskTC = (taskID: string, todolistId: string): AppThunk => (d
     dispatch(removeTaskAC(taskID, todolistId))
   })
 }
-export const addTaskTC = (title: string, todolistId: string): AppThunk => (dispatch) => {
+export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<TasksActionsType>) => {
   todolistsAPI.createTask(todolistId, title)
      .then(res => {
-
-       dispatch(addTaskAC(res.data.data.item))
+       if (res.data.resultCode === 0) {
+         dispatch(addTaskAC(res.data.data.item))
+       } else {
+         // если length вообще существует, то
+         if (res.data.messages.length) {
+           dispatch(setErrorAC(res.data.messages[0]))
+         } else {
+           dispatch(setErrorAC('some error occurred'))
+         }
+       }
      })
 }
-export const updateTaskTC = (taskID: string, domaimModel: UpdateDomainTaskModelType, todolistID: string): AppThunk => {
+export const updateTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelType, todolistID: string): AppThunk => {
   return (dispatch, getState: () => RootStateType) => {
     const state = getState()
     const task = state.tasks[todolistID].find(t => t.id === taskID)
@@ -105,11 +115,11 @@ export const updateTaskTC = (taskID: string, domaimModel: UpdateDomainTaskModelT
       priority: task.priority,
       startDate: task.startDate,
       deadline: task.deadline,
-      ...domaimModel
+      ...domainModel
     }
     todolistsAPI.updateTask(todolistID, taskID, apiModel)
        .then(res => {
-         dispatch(updateTaskAC(taskID, domaimModel, todolistID))
+         dispatch(updateTaskAC(taskID, domainModel, todolistID))
        })
   }
 }
@@ -135,3 +145,4 @@ export type TasksActionsType = ReturnType<typeof removeTaskAC>
    | ReturnType<typeof removeTodolistAC>
    | ReturnType<typeof setTodolistsAC>
    | ReturnType<typeof setTasksAC>
+   | ReturnType<typeof setErrorAC>

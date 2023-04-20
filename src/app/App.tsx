@@ -2,11 +2,8 @@ import React from 'react';
 import './App.css';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {Menu} from "@mui/icons-material";
-import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
+import {AppBar, Button, Container, IconButton, Toolbar, Typography} from "@mui/material";
 import {ErrorSnackbar} from "../components/errorSnackbar/ErrorSnackbar";
-
-
-
 
 
 export function App() {
@@ -30,7 +27,7 @@ export function App() {
            </Typography>
            <Button color="inherit" style={{padding: '25px'}}>All Todolists</Button>
          </Toolbar>
-         <LinearProgress color={'primary'} />
+       {/*  <LinearProgress color={'primary'} />*/}
        </AppBar>
        <Container fixed>
         <TodolistsList/>

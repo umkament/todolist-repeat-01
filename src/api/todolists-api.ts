@@ -50,7 +50,7 @@ export type TodolistType = {
 }
 export type ResponseType<D = {}> = {
   resultCode: number
-  messages: [],
+  messages: string,
   data: D
 }
 

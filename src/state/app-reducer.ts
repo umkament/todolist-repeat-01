@@ -2,12 +2,12 @@
 export type RequestStatusType = 'idle' | 'loading' | 'success' | 'failed'
 export type AppStateType = {
   status: RequestStatusType
-  error: string | null
+  error:  string | null
 }
 
 const InitialState: AppStateType  = {
   status: 'idle',
-  error: 'some error'
+  error: null
 }
 
 export const appReducer = (state: AppStateType = InitialState, action: AppActionType): AppStateType => {
