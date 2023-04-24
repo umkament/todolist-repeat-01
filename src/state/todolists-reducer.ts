@@ -1,5 +1,6 @@
 import {todolistsAPI, TodolistType} from "../api/todolists-api";
 import {AppThunk} from "../app/store";
+import {RequestStatusType, setStatusAC} from "./app-reducer";
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -8,7 +9,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
     case 'REMOVE-TODOLIST':
       return state.filter(tl => tl.id !== action.id)
     case 'ADD-TODOLIST':
-      return [{...action.todolist, filter: 'all'}, ...state]
+      return [{...action.todolist, filter: 'all', entityStatus: 'idle'}, ...state]
     case 'CHANGE-TODOLIST-TITLE':
       //возвращаем state который мапим, соответственно возвращаем новый массив
       //в map приходит tl и мы пробегаемся по всем тудулистам
@@ -18,7 +19,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
     case 'CHANGE-TODOLIST-FILTER':
       return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
     case "SET-TODOLISTS":
-      return action.todolists.map(tl => ({...tl, filter: 'all'}))
+      return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
     default:
       return state;
   }
@@ -41,8 +42,10 @@ export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET-T
 
 //thunks
 export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
+  dispatch(setStatusAC('loading'))
   todolistsAPI.getTodolists().then(res => {
     dispatch(setTodolistsAC(res.data))
+    dispatch(setStatusAC('success'))
   })
 }
 // пример async/await
@@ -66,8 +69,10 @@ export const removeTodolistsTC = (todolistID: string): AppThunk => (dispatch) =>
   })
 }
 export const addTodolistsTC = (title: string): AppThunk => (dispatch) => {
+  dispatch(setStatusAC('loading'))
   todolistsAPI.createTodolist(title).then(res => {
     dispatch(addTodolistAC(res.data.data.item))
+    dispatch(setStatusAC('success'))
   })
 }
 export const changeTodolistTitleTC = (todolistID: string, title: string): AppThunk => (dispatch) => {
@@ -86,4 +91,5 @@ export type TodolistsActionsType = ReturnType<typeof removeTodolistAC>
 export type FilterValueType = "all" | "active" | "completed"
 export type TodolistDomainType = TodolistType & {
   filter: FilterValueType
+  entityStatus: RequestStatusType
 }
