@@ -1,7 +1,7 @@
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolists-api";
 import {AppThunk, RootStateType} from "../app/store";
-import {setErrorAC, setStatusAC} from "./app-reducer";
+import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
 
 
 const initialState: TaskStateType = {}
@@ -74,10 +74,10 @@ export const setTasksAC = (tasks: TaskType[], todolistID: string) => ({
 
 //thunks
 export const fetchTasksTC = (todolistID: string): AppThunk => (dispatch) => {
-  dispatch(setStatusAC('loading'))
+  dispatch(setAppStatusAC('loading'))
   todolistsAPI.getTasks(todolistID).then((res) => {
     dispatch(setTasksAC(res.data.items, todolistID))
-    dispatch(setStatusAC('success'))
+    dispatch(setAppStatusAC('success'))
   })
 }
 export const removeTaskTC = (taskID: string, todolistId: string): AppThunk => (dispatch) => {
@@ -86,20 +86,20 @@ export const removeTaskTC = (taskID: string, todolistId: string): AppThunk => (d
   })
 }
 export const addTaskTC = (title: string, todolistId: string): AppThunk => (dispatch) => {
-  dispatch(setStatusAC('loading'))
+  dispatch(setAppStatusAC('loading'))
   todolistsAPI.createTask(todolistId, title)
      .then(res => {
        if (res.data.resultCode === 0) {
          dispatch(addTaskAC(res.data.data.item))
-         dispatch(setStatusAC('success'))
+         dispatch(setAppStatusAC('success'))
        } else {
          // если length вообще существует, то
          if (res.data.messages.length) {
-           dispatch(setErrorAC(res.data.messages[0]))
+           dispatch(setAppErrorAC(res.data.messages[0]))
          } else {
-           dispatch(setErrorAC('some error occurred'))
+           dispatch(setAppErrorAC('some error occurred'))
          }
-         dispatch(setStatusAC('failed'))
+         dispatch(setAppStatusAC('failed'))
        }
      })
 }
@@ -148,4 +148,4 @@ export type TasksActionsType = ReturnType<typeof removeTaskAC>
    | ReturnType<typeof removeTodolistAC>
    | ReturnType<typeof setTodolistsAC>
    | ReturnType<typeof setTasksAC>
-   | ReturnType<typeof setErrorAC>
+   | ReturnType<typeof setAppErrorAC>
