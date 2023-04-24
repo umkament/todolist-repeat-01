@@ -6,8 +6,11 @@ import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typograp
 import {ErrorSnackbar} from "../components/errorSnackbar/ErrorSnackbar";
 import {useAppSelector} from "./hooks";
 
+type PropsType = {
+  demo?: boolean
+}
 
-export function App() {
+export function App({demo=false}: PropsType) {
   const status = useAppSelector(state => state.app.status)
 
   console.log("app")
@@ -33,7 +36,7 @@ export function App() {
        {status === 'loading' && <LinearProgress color={'primary'}/>}
        </AppBar>
        <Container fixed>
-        <TodolistsList/>
+        <TodolistsList demo={demo}/>
        </Container>
      </div>
   );

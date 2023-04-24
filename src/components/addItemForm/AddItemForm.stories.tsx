@@ -10,3 +10,9 @@ export default {
 export const AddItemFormBaseElement = (props: any) => {
   return <AddItemForm addItem={action('button add text')}/>
 }
+
+export const AddItemFormDisabledExample = (props: any) => {
+  return <AddItemForm addItem={action('button add text')}
+                      disabled={true}
+  />
+}

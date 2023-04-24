@@ -9,5 +9,5 @@ export default {
 }
 
 export const AppWithReduxBaseElement = (props: any) => {
-  return <App/>
+  return <App demo={true}/>
 }

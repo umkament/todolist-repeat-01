@@ -5,9 +5,10 @@ import {LibraryAdd} from "@mui/icons-material";
 export type AddItemFormPropsType = {
 
   addItem: (title: string) => void
+  disabled?: boolean
 }
 
-export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
+export const AddItemForm = React.memo(function ({addItem, disabled}: AddItemFormPropsType) {
   console.log("additemform")
   let [taskTitle, setTaskTitle] = useState("")
   let [error, setError] = useState<string>('')
@@ -22,7 +23,7 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
 
     setError('')
     if (e.charCode === 13 && taskTitle.trim() !== "") {
-      props.addItem(taskTitle.trim());
+      addItem(taskTitle.trim());
       setTaskTitle("")
     }
     if (e.charCode === 13 && taskTitle.trim() === "") {
@@ -32,7 +33,7 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
 
   const addTaskButtonClickHandler = () => {
     if (taskTitle.trim() !== "") {
-      props.addItem(taskTitle.trim());
+      addItem(taskTitle.trim());
       setTaskTitle("")
     } else {
       setError("title is required")
@@ -49,8 +50,9 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
           label={'Type title'}
           error={!!error}
           helperText={error}
+          disabled={disabled}
        />
-       <IconButton onClick={addTaskButtonClickHandler}>
+       <IconButton onClick={addTaskButtonClickHandler} disabled={disabled}>
          <LibraryAdd/>
        </IconButton>
      </div>
