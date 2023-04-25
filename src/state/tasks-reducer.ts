@@ -76,15 +76,25 @@ export const setTasksAC = (tasks: TaskType[], todolistID: string) => ({
 //thunks
 export const fetchTasksTC = (todolistID: string): AppThunk => (dispatch) => {
   dispatch(setAppStatusAC('loading'))
-  todolistsAPI.getTasks(todolistID).then((res) => {
+  todolistsAPI.getTasks(todolistID)
+     .then((res) => {
     dispatch(setTasksAC(res.data.items, todolistID))
     dispatch(setAppStatusAC('success'))
   })
+     .catch((error)=>{
+       handleServerNetworkError(error, dispatch)
+     })
 }
 export const removeTaskTC = (taskID: string, todolistId: string): AppThunk => (dispatch) => {
-  todolistsAPI.deleteTask(taskID, todolistId).then(res => {
+  dispatch(setAppStatusAC('loading'))
+  todolistsAPI.deleteTask(taskID, todolistId)
+     .then(res => {
     dispatch(removeTaskAC(taskID, todolistId))
+       dispatch(setAppStatusAC('success'))
   })
+     .catch((error)=>{
+       handleServerNetworkError(error, dispatch)
+     })
 }
 export const addTaskTC = (title: string, todolistId: string): AppThunk => (dispatch) => {
   dispatch(setAppStatusAC('loading'))

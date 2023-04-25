@@ -1,6 +1,7 @@
 import {todolistsAPI, TodolistType} from "../api/todolists-api";
 import {AppThunk} from "../app/store";
 import {RequestStatusType, setAppStatusAC} from "./app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -54,6 +55,9 @@ export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
     dispatch(setTodolistsAC(res.data))
     dispatch(setAppStatusAC('success'))
   })
+     .catch((error)=>{
+       handleServerNetworkError(error, dispatch)
+     })
 }
 // пример async/await
 //сначала объявляем, что наша функция асинхронная async
@@ -73,21 +77,37 @@ export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
 export const removeTodolistsTC = (todolistID: string): AppThunk => (dispatch) => {
   dispatch(setAppStatusAC('loading'))
   dispatch(changeTodolistStatusAC(todolistID, 'loading'))
-  todolistsAPI.deleteTodolist(todolistID).then(res => {
+  todolistsAPI.deleteTodolist(todolistID)
+     .then(res => {
     dispatch(removeTodolistAC(todolistID))
   })
+     .catch((error)=>{
+       handleServerNetworkError(error, dispatch)
+     })
 }
 export const addTodolistsTC = (title: string): AppThunk => (dispatch) => {
   dispatch(setAppStatusAC('loading'))
-  todolistsAPI.createTodolist(title).then(res => {
-    dispatch(addTodolistAC(res.data.data.item))
-    dispatch(setAppStatusAC('success'))
+  todolistsAPI.createTodolist(title)
+     .then(res => {
+       if (res.data.resultCode === 0) {
+         dispatch(addTodolistAC(res.data.data.item))
+         dispatch(setAppStatusAC('success'))
+       } else {
+         handleServerAppError(res.data, dispatch)
+       }
   })
+     .catch((error)=>{
+       handleServerNetworkError(error, dispatch)
+     })
 }
 export const changeTodolistTitleTC = (todolistID: string, title: string): AppThunk => (dispatch) => {
-  todolistsAPI.updateTodolist(todolistID, title).then(res => {
+  todolistsAPI.updateTodolist(todolistID, title)
+     .then(res => {
     dispatch(changeTodolistTitleAC(todolistID, title))
   })
+     .catch((error)=>{
+       handleServerNetworkError(error, dispatch)
+     })
 }
 
 //types
