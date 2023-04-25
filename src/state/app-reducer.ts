@@ -20,7 +20,6 @@ export const setAppErrorAC = (error: string|null)=>({type: 'SET-ERROR', error} a
 export const setAppStatusAC = (status: RequestStatusType)=>({type: 'SET-STATUS', status} as const)
 
 //types
-
 export type RequestStatusType = 'idle' | 'loading' | 'success' | 'failed'
 export type AppStateType = {
   status: RequestStatusType
