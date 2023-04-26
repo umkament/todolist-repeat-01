@@ -5,6 +5,8 @@ import {Menu} from "@mui/icons-material";
 import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
 import {ErrorSnackbar} from "../components/errorSnackbar/ErrorSnackbar";
 import {useAppSelector} from "./hooks";
+import {Login} from "../features/Login/Login";
+import {BrowserRouter, Route} from "react-router-dom";
 
 type PropsType = {
   demo?: boolean
@@ -16,6 +18,7 @@ export function App({demo=false}: PropsType) {
   console.log("app")
 
   return (
+     <BrowserRouter>
      <div className="App">
  <ErrorSnackbar/>
        <AppBar position="static"
@@ -36,9 +39,13 @@ export function App({demo=false}: PropsType) {
        {status === 'loading' && <LinearProgress color={'primary'}/>}
        </AppBar>
        <Container fixed>
-        <TodolistsList demo={demo}/>
+         <Route exact path='/' render={()=><TodolistsList demo={demo}/>} />
+         <Route path='/login' render={()=><Login/>} />
+
+
        </Container>
      </div>
+     </BrowserRouter>
   );
 }
 

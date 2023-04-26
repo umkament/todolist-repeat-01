@@ -78,6 +78,11 @@ const initialGlobalState: RootStateType = {
   app: {
     status: 'idle',
     error: null
+  },
+  login: {
+    email: '',
+    password: '',
+    remenberMe: false
   }
 }
 

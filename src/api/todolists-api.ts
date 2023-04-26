@@ -41,6 +41,18 @@ export let todolistsAPI = {
   }
 }
 
+export type LoginParamsType = {
+  email: string,
+  password: string,
+  rememberMe: boolean,
+  captcha?: boolean
+}
+export let authAPI = {
+  login(params: LoginParamsType){
+    return instance.post<ResponseType<{ userId?: number }>>('auth/login', params)
+  }
+}
+
 // types
 export type TodolistType = {
   id: string
