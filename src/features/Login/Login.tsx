@@ -8,12 +8,14 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
-import {useAppDispatch} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {loginTC} from "../../state/login-reducer";
+import {Redirect} from "react-router-dom";
 
 export const Login = () => {
 
   const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
 
   const formik = useFormik({
     initialValues: {
@@ -35,6 +37,8 @@ export const Login = () => {
         }
     }
   });
+  //если isLoggedIn=true, то нас перенаправляют на главную страницу с тудулистами
+  if (isLoggedIn) { return <Redirect to='/'/>}
 
   return <Grid container justifyContent={'center'}>
     <Grid item justifyContent={'center'}>

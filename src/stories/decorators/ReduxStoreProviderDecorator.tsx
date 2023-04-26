@@ -80,9 +80,7 @@ const initialGlobalState: RootStateType = {
     error: null
   },
   login: {
-    email: '',
-    password: '',
-    remenberMe: false
+    isLoggedIn: false
   }
 }
 
