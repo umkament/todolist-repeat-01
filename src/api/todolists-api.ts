@@ -50,6 +50,12 @@ export type LoginParamsType = {
 export let authAPI = {
   login(params: LoginParamsType){
     return instance.post<ResponseType<{ userId?: number }>>('auth/login', params)
+  },
+  me(){
+    return instance.get<ResponseType<{id:number, email: string, login: string }>>('auth/me')
+  },
+  logOut(){
+    return instance.delete<ResponseType<{userId?: number}>>('auth/login')
   }
 }
 

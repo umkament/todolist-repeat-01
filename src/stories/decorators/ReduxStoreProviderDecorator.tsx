@@ -77,7 +77,8 @@ const initialGlobalState: RootStateType = {
   },
   app: {
     status: 'idle',
-    error: null
+    error: null,
+    initialized: false
   },
   login: {
     isLoggedIn: false
