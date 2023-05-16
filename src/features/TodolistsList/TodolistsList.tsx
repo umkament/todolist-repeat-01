@@ -20,10 +20,12 @@ export type TodolistsListPropsType = {
   demo?: boolean
 }
 export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) => {
+  console.log('Todolist_List')
+  const dispatch = useAppDispatch();
   const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
   const tasksObj = useAppSelector<TaskStateType>(state => state.tasks)
   const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
-  const dispatch = useAppDispatch();
+
 
 
   useEffect(() => {

@@ -41,12 +41,6 @@ export let todolistsAPI = {
   }
 }
 
-export type LoginParamsType = {
-  email: string,
-  password: string,
-  rememberMe: boolean,
-  captcha?: boolean
-}
 export let authAPI = {
   login(params: LoginParamsType){
     return instance.post<ResponseType<{ userId?: number }>>('auth/login', params)
@@ -58,6 +52,7 @@ export let authAPI = {
     return instance.delete<ResponseType<{userId?: number}>>('auth/login')
   }
 }
+
 
 // types
 export type TodolistType = {
@@ -105,4 +100,10 @@ export type UpdateTaskModelType = {
   priority: TaskPriorities
   startDate: string
   deadline: string
+}
+export type LoginParamsType = {
+  email: string,
+  password: string,
+  rememberMe: boolean,
+  captcha?: boolean
 }

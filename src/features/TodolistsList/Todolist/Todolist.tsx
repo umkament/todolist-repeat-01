@@ -24,7 +24,7 @@ export type PropsType = {
   demo?: boolean
 }
 
-export const Todolist = React.memo(function Todolist({demo = false, ...props}: PropsType) {
+export const Todolist: React.FC<PropsType> = React.memo(function Todolist({demo = false, ...props}) {
   console.log("todolist")
 
   const dispatch = useAppDispatch()
