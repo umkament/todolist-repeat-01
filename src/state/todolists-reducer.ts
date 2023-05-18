@@ -73,7 +73,6 @@ export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
     console.error(e)
   }
 }*/
-
 export const removeTodolistsTC = (todolistID: string): AppThunk => (dispatch) => {
   dispatch(setAppStatusAC('loading'))
   dispatch(changeTodolistStatusAC(todolistID, 'loading'))
