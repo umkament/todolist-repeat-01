@@ -27,7 +27,6 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) 
   const isLoggedIn = useAppSelector<boolean>(state => state.login.isLoggedIn)
 
 
-
   useEffect(() => {
     if (demo || !isLoggedIn) {
       return;
@@ -69,7 +68,7 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) 
     dispatch(addTodolistsTC(title))
   }, [])
 
-  if (!isLoggedIn){
+  if (!isLoggedIn) {
     return <Redirect to={'/login'}/>
   }
 

@@ -55,7 +55,7 @@ export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
     dispatch(setTodolistsAC(res.data))
     dispatch(setAppStatusAC('success'))
   })
-     .catch((error)=>{
+     .catch((error) => {
        handleServerNetworkError(error, dispatch)
      })
 }
@@ -78,9 +78,9 @@ export const removeTodolistsTC = (todolistID: string): AppThunk => (dispatch) =>
   dispatch(changeTodolistStatusAC(todolistID, 'loading'))
   todolistsAPI.deleteTodolist(todolistID)
      .then(res => {
-    dispatch(removeTodolistAC(todolistID))
-  })
-     .catch((error)=>{
+       dispatch(removeTodolistAC(todolistID))
+     })
+     .catch((error) => {
        handleServerNetworkError(error, dispatch)
      })
 }
@@ -94,17 +94,17 @@ export const addTodolistsTC = (title: string): AppThunk => (dispatch) => {
        } else {
          handleServerAppError(res.data, dispatch)
        }
-  })
-     .catch((error)=>{
+     })
+     .catch((error) => {
        handleServerNetworkError(error, dispatch)
      })
 }
 export const changeTodolistTitleTC = (todolistID: string, title: string): AppThunk => (dispatch) => {
   todolistsAPI.updateTodolist(todolistID, title)
      .then(res => {
-    dispatch(changeTodolistTitleAC(todolistID, title))
-  })
-     .catch((error)=>{
+       dispatch(changeTodolistTitleAC(todolistID, title))
+     })
+     .catch((error) => {
        handleServerNetworkError(error, dispatch)
      })
 }
